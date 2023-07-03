@@ -1,0 +1,3 @@
+Select customers 
+from Customers
+where age>25 And purchase>=1
