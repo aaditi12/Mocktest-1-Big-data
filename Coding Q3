@@ -1,0 +1,15 @@
+students.json
+
+{
+   "name":"John"
+    "age":12
+    "grades":{
+        "math":4.0,
+         "english":5.0
+         },
+  "registered":true,
+   "favorite subjects":["math","english"]
+}
+
+
+    
