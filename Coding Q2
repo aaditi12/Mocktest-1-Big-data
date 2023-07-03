@@ -1,1 +1,52 @@
+from pyspark.sql import*
+from pyspark import SparkContext, SparkConf
 
+#setup configuration property 
+#set the master URL 
+#set an application name 
+conf = SparkConf().setMaster("local").setAppName("sparkproject")
+#start spark cluster 
+#if already started then get it else start it 
+sc = SparkContext.getOrCreate(conf=conf)
+#initialize SQLContext from spark cluster 
+sqlContext = SQLContext(sc)
+
+# create sales data
+sales_data = [
+          ('Shampoo', '1,50,270'),
+          ('Basmati Rice', '2,50,270'),
+          ('Ashirwad Atta', '4,50,270'),
+          ('Microwave-Oven', '5,50,470'),
+          ('AC', '10,50,890'),
+          ('TV', '15,50,780'),
+          ('Fan', '20,50,670')
+          ]
+
+# cols
+
+sales_cols= ["product_name", "revenue"]
+sales_df = spark.createDataFrame(data = sales_data, schema = sales_cols)
+# view the data
+sales_df.show()
+
+The Sales dataframe will look like this:-
++-----------+----------+
+|product_name|revenue|
++-----------+----------+
+|   Shampoo |1,50,270|       
+| Basmati Rice |2,50,270|         
+| Ashirwad Atta |4,50,270|         
+|  Microwave-Oven |5,50,470|         
+|    AC    |10,50,890|         
+|    TV      |15,50,780|         
+|     Fan     |20,50,670|         
++-----------+----------+
+
+Code for total revenue
+Total_revenue_df=sales_data.groupby(['product_name','revenue']).agg(
+                sum('revenue').alias(Total_revenue)).orderby(revenue,ascending=True)
+
++-----------+--
+|Total_revenue|
++-----------+---
+| 6,053,620|   
