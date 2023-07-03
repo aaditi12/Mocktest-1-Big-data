@@ -11,5 +11,30 @@ students.json
    "favorite subjects":["math","english"]
 }
 
+from pyspark.sql import*
+from pyspark import SparkContext, SparkConf
 
-    
+#setup configuration property 
+#set the master URL 
+#set an application name 
+conf = SparkConf().setMaster("local").setAppName("sparkproject")
+#start spark cluster 
+#if already started then get it else start it 
+sc = SparkContext.getOrCreate(conf=conf)
+#initialize SQLContext from spark cluster 
+sqlContext = SQLContext(sc)
+
+#Filepath variable for your file location directory
+FilePath="E:/spark/"
+#FileName variable
+FileName="students.json"
+#combine both above variables
+FullPath= FilePath + FileName
+
+#dataframe 
+#set header property true for the actual header columns
+df=sqlContext.read.csv(E:/spark/students.json, header=True)
+#display data from the dataframe
+df.show()
+
+
