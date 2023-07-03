@@ -1,1 +1,56 @@
+from pyspark.sql import*
+from pyspark import SparkContext, SparkConf
 
+#setup configuration property 
+#set the master URL 
+#set an application name 
+conf = SparkConf().setMaster("local").setAppName("sparkproject")
+#start spark cluster 
+#if already started then get it else start it 
+sc = SparkContext.getOrCreate(conf=conf)
+#initialize SQLContext from spark cluster 
+sqlContext = SQLContext(sc)
+
+# create transactions data
+transactions = [
+          ('400','101','50,270'),
+          ('401','102', '50,270'),
+          ('402','103', '1,10,270'),
+          ('402', '103','50,470'),
+          ('403', '105','50,890'),
+          ('403', '105','15,780'),
+          ('404', '107', '20,670')
+          ]
+
+# cols
+
+transactions_cols= ["transaction_id", "user_id","amount"]
+transactions_df = spark.createDataFrame(data = transactions_data, schema = transactions_cols)
+# view the data
+transactions_df.show()
+
+The transactions dataframe will look like this:-
++-----------+----------+
+|transaction_id|user_id|amount
++-----------+----------+
+|   400        |101|     50,270           
+|     401      |102|    50,270      
+|      402     |103|    1,10,270     
+|    402       |103|     50,470    
+|    403       |105|      50,890    
+|    403       |105|       15,780  
+|     404      |107|        20,670   
++-----------+----------+
+
+Code for average_transaction_amount
+average_transaction_amount_df=transactions_data.groupby(['transaction_amount','user_id','transaction_id']).agg(
+                avg('transaction_amount').alias(average_transaction_amount))
+
++-----------+--
+|transaction_id|user_id|average_transaction_amount
++-----------+---
+|   400        |101| 50,270
+|401          |102|50,270
+|402          |103|80,370
+|403          |105|33,335
+|404          |107|20,670
