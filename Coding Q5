@@ -1,0 +1,21 @@
+df = ...  # streaming DataFrame with IOT device data with schema { device: string, deviceType: string, signal: double, time: DateType }
+
+# Select the devices which have signal more than 10
+df.select("device").where("signal > 10")
+
+# Running count of the number of updates for each device type
+df.groupBy("deviceType").count()
+
+df.createOrReplaceTempView("updates")
+spark.sql("select count(*) from updates")  # returns another streaming DF
+
+df.isStreaming()
+
+words = ...  # streaming DataFrame of schema { timestamp: Timestamp, word: String }
+
+# Group the data by window and word and compute the count of each group
+windowedCounts = words.groupBy(
+    window(words.timestamp, "1 hour", "1 hour"),
+    words.word
+).count()
+
