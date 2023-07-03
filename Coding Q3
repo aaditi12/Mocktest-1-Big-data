@@ -2,7 +2,7 @@ students.json
 
 {
    "name":"John"
-    "age":12
+    "age":19
     "grades":{
         "math":4.0,
          "english":5.0
@@ -37,4 +37,6 @@ df=sqlContext.read.csv(E:/spark/students.json, header=True)
 #display data from the dataframe
 df.show()
 
+Code for age greater than 18
+age_df=df.groupby('name').age>18
 
