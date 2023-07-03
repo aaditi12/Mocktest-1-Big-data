@@ -1,0 +1,2 @@
+Select products_name, avg(price),catergory_name
+from Products
