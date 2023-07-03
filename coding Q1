@@ -1,0 +1,40 @@
+from pyspark.sql import*
+from pyspark import SparkContext, SparkConf
+
+#setup configuration property 
+#set the master URL 
+#set an application name 
+conf = SparkConf().setMaster("local").setAppName("sparkproject")
+#start spark cluster 
+#if already started then get it else start it 
+sc = SparkContext.getOrCreate(conf=conf)
+#initialize SQLContext from spark cluster 
+sqlContext = SQLContext(sc)
+
+#Filepath variable for your file location directory
+FilePath="E:/sparkproject/"
+#FileName variable
+FileName="Employee.csv"
+#combine both above variables
+FullPath= FilePath + FileName
+
+#dataframe 
+#set header property true for the actual header columns
+df=sqlContext.read.csv(E:/sparkproject/Employee.csv, header=True)
+#display data from the dataframe
+df.show(10)
+
++-----+-----+---+------+
+|employee_id|name|age|department|
++-----+-----+---+------+
+| 101 |Arjun| 23|IT|
+| 102| Gray| 24|sales|
+|103| Wang| 32|marketing|
+|104|Kumar| 23|social-media|
+|105|White| 45|IT|
+106  Ajay   46  sales
+107  Anita  24   sales
+108  john   56   social-media
+109  charles 55   marketing
+110   isabel  52   sales
++-----+-----+---+------+
