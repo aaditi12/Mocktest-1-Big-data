@@ -1,4 +1,4 @@
-Select products
+Select products_name
 from Products
 where stock  NOT IN dict['AC':1, 'TV':2, 'Fan':4]
 ORDER BY stock;
