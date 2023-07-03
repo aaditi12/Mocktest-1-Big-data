@@ -1,0 +1,4 @@
+SELECT CustomerId, COUNT(*) AS Orders
+FROM Invoices
+GROUP BY CustomerId
+ORDER BY Orders DESC
